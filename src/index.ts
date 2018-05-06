@@ -4,7 +4,7 @@ import { tooltipPath, CornerRadius, ArrowPosition } from './utils/svg'
  * Generates the content of the SVG file representing the tooltip
  * @param options The options
  */
-export function tooltipSVG (options: {
+export function tooltip (options: {
   /**
    * The tooltip width without the arrow.
    */
@@ -49,17 +49,34 @@ export function tooltipSVG (options: {
    * Size of the shadow. Set 0 for no shadow.
    */
   shadowSize?: number
-}): string {
+}): {
+  /**
+   * The content of the SVG file
+   */
+  svg: string
+  /**
+   * The content insents. Use it as the minimum padding of the content.
+   */
+  insets: { top: number, right: number, bottom: number, left: number }
+  /**
+   * The total size of the SVG
+   */
+  size: {
+    width: number
+    height: number
+  }
+} {
   const { arrow } = options
   const shadowSize = options.shadowSize || 0
-  const path = tooltipPath({
+  const pathOptions = {
     x: 2 * shadowSize,
     y: 2 * shadowSize,
     width: options.width,
     height: options.height,
     cornerRadius: options.cornerRadius,
     arrow: options.arrow
-  })
+  }
+  const path = tooltipPath(pathOptions)
 
   let width = options.width + 4 * shadowSize
   if (arrow && (arrow.position === 'left' || arrow.position === 'right')) width += arrow.height
@@ -72,7 +89,7 @@ export function tooltipSVG (options: {
   const filterWidth = 100 + (shadowSize / options.width) * 400
   const filterHeight = 100 + (shadowSize / options.height) * 400
 
-  return `<?xml version="1.0" encoding="UTF-8"?>
+  const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <svg width="${width}px" height="${height}px" viewBox="0 0 ${width} ${height}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
           <path d="${path.toString()}" id="tooltip"></path>
@@ -89,4 +106,17 @@ export function tooltipSVG (options: {
       </g>
   </svg>
   `
+  return {
+    svg: svg,
+    insets: {
+      top: pathOptions.y + ((arrow && arrow.position === 'top') ? arrow.height : 0),
+      left: pathOptions.x + ((arrow && arrow.position === 'left') ? arrow.height : 0),
+      right: pathOptions.x + ((arrow && arrow.position === 'right') ? arrow.height : 0),
+      bottom: pathOptions.y + ((arrow && arrow.position === 'bottom') ? arrow.height : 0)
+    },
+    size: {
+      width: width,
+      height: height
+    }
+  }
 }

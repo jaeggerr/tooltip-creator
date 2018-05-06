@@ -1,10 +1,8 @@
-import { tooltipSVG } from '../src/index'
+import { tooltip } from '../src/index'
 import { ArrowPosition } from '../src/utils/svg'
 
-function liveGeneration (): boolean {
-  const live = document.getElementById('liveGeneration') as HTMLInputElement
-  return live.checked
-}
+const defaultText = `Supply-chains podcasting tag virtual. Synergize bleeding-edge, addelivery: portals leading-edge embrace embrace turn-key, strategize interactive, magnetic. Podcasting viral standards-compliant e-business reinvent synergistic iterate. Social communities whiteboard expedite seize weblogs innovate streamline proactive, citizen-media extend; whiteboard. Front-end cross-media applications frictionless architect webservices killer empower scalable, infomediaries, "real-time user-centred," transparent extensible post."
+Extend applications B2C syndicate, out-of-the-box dynamic sticky viral engineer revolutionary methodologies back-end rich-clientAPIs synergistic global productize. Peer-to-peer relationships users target synergies synergies methodologies integrate. Recontextualize B2B seize, envisioneer, disintermediate communities embedded long-tail integrate leverage. Extend communities addelivery communities generate engage drive beta-test, e-business. Networkeffects transition; supply-chains innovate incentivize leading-edge dynamic end-to-end incentivize architectures aggregate peer-to-peer web services B2C.`
 
 function getInputValue (id: string): string {
   const input = document.getElementById(id) as HTMLInputElement
@@ -15,26 +13,27 @@ function getInputNumValue (id: string): number {
   return parseFloat(getInputValue(id))
 }
 
-function getArrowPosition (): ArrowPosition {
+function getInputCheckedValue (id: string): boolean {
+  return (document.getElementById(id) as HTMLInputElement).checked
+}
+
+function getArrowPosition (): ArrowPosition | null {
   const inputs = document.getElementsByName('arrow') as NodeListOf<HTMLInputElement>
   for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].checked) return inputs[i].value as ArrowPosition
+    if (inputs[i].checked) {
+      if (inputs[i].value === 'none') return null
+      return inputs[i].value as ArrowPosition
+    }
   }
-  return 'top'
+  return null
 }
 
-window.onload = () => {
-  window['recreateTooltip']()
-}
+function recreateTooltip () {
+  const width = getInputNumValue('width')
+  const height = getInputNumValue('height')
+  const arrowPosition = getArrowPosition()
 
-window['onSettingInputChange'] = function () {
-  if (liveGeneration()) {
-    window['recreateTooltip']()
-  }
-}
-
-window['recreateTooltip'] = function () {
-  const svg = tooltipSVG({
+  const { svg, insets, size } = tooltip({
     width: getInputNumValue('width'),
     height: getInputNumValue('height'),
     shadowSize: getInputNumValue('shadow'),
@@ -45,15 +44,29 @@ window['recreateTooltip'] = function () {
       lowerLeft: getInputNumValue('bottomLeftCorner'),
       lowerRight: getInputNumValue('bottomRightCorner')
     },
-    arrow: {
-      position: getArrowPosition(),
-      base: 40,
-      height: 20,
-      start: 25
-    }
+    arrow: (arrowPosition) ? {
+      position: arrowPosition,
+      base: getInputNumValue('arrowBase'),
+      height: getInputNumValue('arrowHeight'),
+      start: getInputNumValue('arrowOffset')
+    } : undefined
   })
 
-  const base64 = btoa(svg)
-  const image = document.getElementById('svg') as HTMLImageElement
-  image.src = `data:image/svg+xml;base64,${base64}`
+  const base64 = `data:image/svg+xml;base64,${btoa(svg)}`
+
+  const tooltipElement = document.getElementById('tooltip') as HTMLDivElement
+  tooltipElement.style.backgroundImage = `url(${base64})`
+  tooltipElement.style.padding = `${insets.top}px ${insets.right}px ${insets.bottom}px ${insets.left}px`
+  tooltipElement.style.width = `${size.width}px`
+  tooltipElement.style.height = `${size.height}px`
+
+  const tooltipContent = document.getElementById('tooltipContent') as HTMLDivElement
+  tooltipContent.innerText = (document.getElementById('text') as HTMLInputElement).value
+}
+
+window['recreateTooltip'] = recreateTooltip
+
+window.onload = () => {
+  (document.getElementById('text') as HTMLInputElement).value = defaultText
+  recreateTooltip()
 }
