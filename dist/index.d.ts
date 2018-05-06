@@ -3,7 +3,7 @@ import { CornerRadius, ArrowPosition } from './utils/svg';
  * Generates the content of the SVG file representing the tooltip
  * @param options The options
  */
-export declare function tooltipSVG(options: {
+export declare function tooltip(options: {
     /**
      * The tooltip width without the arrow.
      */
@@ -48,4 +48,25 @@ export declare function tooltipSVG(options: {
      * Size of the shadow. Set 0 for no shadow.
      */
     shadowSize?: number;
-}): string;
+}): {
+    /**
+     * The content of the SVG file
+     */
+    svg: string;
+    /**
+     * The content insents. Use it as the minimum padding of the content.
+     */
+    insets: {
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+    };
+    /**
+     * The total size of the SVG
+     */
+    size: {
+        width: number;
+        height: number;
+    };
+};
