@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Tooltip generator</title>
+  </head>
+  <body>
+    <div>
+        <div>
+            Live generation <input type="checkbox" id="liveGeneration" checked="true">
+        </div>
+      <div>
+          Color <input type="text" id="color" value="white" onchange="onSettingInputChange()">
+      </div>
+      <div>
+          Tooltip size
+          <br>
+          <input type="number" id="width" min="0" step="1" value="300" placeholder="Width" onchange="onSettingInputChange()">
+          <input type="number" id="height" min="0" step="1" value="300" placeholder="Height" onchange="onSettingInputChange()">
+      </div>
+      <div>
+          Corners
+          <br>
+          <input type="number" id="topLeftCorner" min="0" step="1" value="5" onchange="onSettingInputChange()">
+          <input type="number" id="topRightCorner" min="0" step="1" value="5" onchange="onSettingInputChange()">
+          <input type="number" id="bottomRightCorner" min="0" step="1" value="5" onchange="onSettingInputChange()">
+          <input type="number" id="bottomLeftCorner" min="0" step="1" value="5" onchange="onSettingInputChange()">
+      </div>
+      <div>
+        Shadow size <input type="number" id="shadow" min="0" step="1" value="20" placeholder="Shadow" onchange="onSettingInputChange()">
+      </div>
+      <div>
+        Arrow position
+        <br>
+        <input type="radio" name="arrow" checked="true" value="top" onchange="onSettingInputChange()"> Top
+        <input type="radio" name="arrow" value="right" onchange="onSettingInputChange()"> Right
+        <input type="radio" name="arrow" value="bottom" onchange="onSettingInputChange()"> Bottom
+        <input type="radio" name="arrow" value="left" onchange="onSettingInputChange()"> Left
+    </div>
+      <div>
+        <br>
+        <button onclick="recreateTooltip()">Generate</button>
+      </div>
+      <div>
+        <img id="svg">
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
