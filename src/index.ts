@@ -81,7 +81,7 @@ export function tooltip (options: {
   let width = options.width + 4 * shadowSize
   if (arrow && (arrow.position === 'left' || arrow.position === 'right')) width += arrow.height
 
-  let height = options.width + 4 * shadowSize
+  let height = options.height + 4 * shadowSize
   if (arrow && (arrow.position === 'top' || arrow.position === 'bottom')) height += arrow.height
 
   const filterXOffset = (shadowSize / options.width) * -200
