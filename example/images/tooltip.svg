@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-  <svg width="380px" height="400px" viewBox="0 0 380 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <defs>
-          <path d="M 50,60 L 65,60 L 85,40 L 105,60 L 335,60 Q 340,60 340,65 L 340,330 Q 340,360 310,360 L 45,360 Q 40,360 40,355 L 40,70 Q 40,60 50,60 Z" id="tooltip"></path>
-          <filter id="shadow" x="-13.333333333333334%" y="-13.333333333333334%" width="126.66666666666667%" height="126.66666666666667%">
-            <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0" />
-            <feColorMatrix result="matrixOut" in="offOut" type="matrix"
-            values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
-            <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="20" />
-            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-        </filter>
-      </defs>
-      <g>
-        <use fill="white" fill-rule="evenodd" xlink:href="#tooltip" filter="url(#shadow)"></use>
-      </g>
+  <svg width="400px" height="420px" viewBox="0 0 400 420" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+      <path d="M 55,70 L 75,70 L 95,50 L 115,70 L 345,70 Q 350,70 350,75 L 350,365 Q 350,370 345,370 L 55,370 Q 50,370 50,365 L 50,75 Q 50,70 55,70 Z" id="tooltip"></path>
+      <filter id="shadow" x="-33.33333333333333%" y="-33.33333333333333%" width="166.66666666666666%" height="166.66666666666666%">
+        <feGaussianBlur stdDeviation="20" />
+        <feOffset dx="0" dy="0" result="blur"/>
+        <feFlood flood-color="rgb(0, 0, 0)" flood-opacity="0.5"/>
+        <feComposite in2="blur" operator="in" result="colorShadow"/>
+        <feComposite in="SourceGraphic" in2="colorShadow" operator="over"/>
+      </filter>
+    </defs>
+    <g>
+      <use fill="white" fill-rule="evenodd" xlink:href="#tooltip" filter="url(#shadow)"></use>
+    </g>
   </svg>
+  

@@ -36,7 +36,9 @@ function recreateTooltip () {
   const { svg, insets, size } = tooltip({
     width: getInputNumValue('width'),
     height: getInputNumValue('height'),
-    shadowSize: getInputNumValue('shadow'),
+    shadow: {
+      size: getInputNumValue('shadow')
+    },
     fillColor: getInputValue('color'),
     cornerRadius: {
       upperLeft: getInputNumValue('topLeftCorner'),
@@ -51,6 +53,9 @@ function recreateTooltip () {
       start: getInputNumValue('arrowOffset')
     } : undefined
   })
+
+  const svgTextArea = (document.getElementById('svg') as HTMLTextAreaElement)
+  svgTextArea.value = svg
 
   const base64 = `data:image/svg+xml;base64,${btoa(svg)}`
 

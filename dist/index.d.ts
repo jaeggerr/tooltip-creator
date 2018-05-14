@@ -45,9 +45,32 @@ export declare function tooltip(options: {
      */
     fillColor: string;
     /**
-     * Size of the shadow. Set 0 for no shadow.
+     * Shadow definitions
      */
-    shadowSize?: number;
+    shadow?: {
+        /**
+         * Size of the shadow. Set 0 for no shadow.
+         */
+        size: number;
+        /**
+         * Shadow color.
+         * Default is black.
+         */
+        color?: string;
+        /**
+         * Opacity. Between 0 and 1.
+         * Default is 0.5.
+         */
+        opacity?: number;
+        /**
+         * Shadow position offset from center.
+         * Default is { x: 0, y: 0 }
+         */
+        offset?: {
+            x: number;
+            y: number;
+        };
+    };
 }): {
     /**
      * The content of the SVG file

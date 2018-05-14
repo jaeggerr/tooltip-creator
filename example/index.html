@@ -41,9 +41,13 @@
         Base <input type="number" id="arrowBase" min="0" step="1" value="40" placeholder="Shadow" onchange="recreateTooltip()">
         Height <input type="number" id="arrowHeight" min="0" step="1" value="20" placeholder="Height" onchange="recreateTooltip()">
       </div>
-      <div>
+      <div style="display: flex;">
         <div id="tooltip" style="overflow: hidden; box-sizing: border-box;">
           <div id="tooltipContent" style="overflow: auto; width: 100%; height: 100%; padding: 20px; box-sizing: border-box;"></div>
+        </div>
+        <div style="margin-top: 30px">
+          <div>SVG</div>
+          <textarea id="svg" style="width: 500px; height: 200px;" onchange="recreateTooltip()"></textarea>
         </div>
       </div>
     </div>
